@@ -1,0 +1,26 @@
+class Solution {
+public:
+    double QuickMul(double x,int n)
+    {
+        int N = n;
+        double res=1;
+        if(N == 0)
+            return 1.0;
+        else
+        {
+            double t = x;
+            while(N!=0){
+                if(N & 0x01 == 1)
+                {
+                    res = res * t;
+                }
+                N = N >> 1;
+                t = t * t;
+            }
+            return res;
+        }
+    }
+    double myPow(double x, int n) {
+        return n>=0 ? QuickMul(x,n) : 1/QuickMul(x,-n);
+    }
+};
