@@ -1,0 +1,15 @@
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        unordered_map<int,int> map; //哈希表
+        int n = nums.size();
+        for(int i=0;i<n;i++)
+            map[nums[i]]=i;
+        for(int i=0;i<n;i++)
+        {
+            if(map.find(target-nums[i])!=map.end() && map[target-nums[i]]!=i) //能找到 并且 不是同一元素
+                return {i,map[target-nums[i]]};
+        }
+        return {};
+    }
+};
