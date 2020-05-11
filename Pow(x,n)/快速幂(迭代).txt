@@ -1,8 +1,8 @@
 class Solution {
 public:
-    double QuickMul(double x,int n)
+    double QuickMul(double x,long long n)
     {
-        int N = n;
+        long long N = n;
         double res=1;
         if(N == 0)
             return 1.0;
@@ -21,6 +21,7 @@ public:
         }
     }
     double myPow(double x, int n) {
-        return n>=0 ? QuickMul(x,n) : 1/QuickMul(x,-n);
+        long long N = n; //1.00000 与 -2147483648 这组数据会越界，-N会出错，因此需要用long long存储
+        return n>=0 ? QuickMul(x,N) : 1/QuickMul(x,-N);
     }
 };
