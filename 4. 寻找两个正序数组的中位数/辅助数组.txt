@@ -1,0 +1,20 @@
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        int len1 = nums1.size(),len2 = nums2.size();
+        int len = len1 + len2;
+        int *nums = new int[len]; //辅助数组
+        int p=0,q=0;
+        for(int i=0;i<len;i++)
+        {
+            if(p<len1 && q<len2) //数组没有越界
+            {
+                nums[i] = nums1[p] > nums2[q] ? nums2[q++] : nums1[p++];
+            }else
+            {
+                nums[i] = p==len1 ? nums2[q++] : nums1[p++]; 
+            }
+        }
+        return len % 2 == 0 ? (nums[len/2-1]+nums[len/2])/2.0 : nums[len/2];  
+    }
+};

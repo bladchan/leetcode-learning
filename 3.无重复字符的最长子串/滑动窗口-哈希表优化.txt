@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int start = 0, end = 0, length = 0, result = 0;
+        int slen = s.length();
+        unordered_map<char, int> hash;
+        while(end < slen)
+        {
+            char t = s[end];
+            if(hash.find(t) != hash.end() && hash[t] >= start) //找到重复 更新
+            {
+                start = hash[t] + 1;
+                length = end - start;
+            }
+            hash[t] = end;
+            end++;
+            length++;
+            result = max(length, result);
+        }
+        return result;
+    }
+};

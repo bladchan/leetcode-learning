@@ -1,0 +1,25 @@
+// 对初次试探代码进行改进
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int start = 0, end = 0, length = 0, result = 0;
+        int slen = s.length();
+        while(end < slen)
+        {
+            char t = s[end];
+            for(int i = start;i < end;i++)
+            {
+                if(s[i] == t) //找到重复 更新
+                {
+                    start = i + 1;
+                    length = end - start;
+                    break;
+                }
+            }
+            length++;
+            end++;
+            result = max(result, length);
+        }
+        return result;
+    }
+};
