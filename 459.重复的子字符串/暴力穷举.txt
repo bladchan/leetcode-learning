@@ -1,0 +1,22 @@
+class Solution {
+public:
+    bool repeatedSubstringPattern(string s) {
+        int len = s.length(),i,j,k;
+        for(i=1; i<=len/2; i++)
+        {
+            if(len % i == 0){  // 能够整除子串长度
+                for(j=0; j<i; j++) {
+                    for(k=j+i; k<len; k=k+i){
+                        if(s[j]!=s[k])
+                            break;
+                    }
+                    if(k<len)
+                        break;
+                }
+                if(j>=i)
+                    return true;
+            }
+        }
+        return false;
+    }
+};

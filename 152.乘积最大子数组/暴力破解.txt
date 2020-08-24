@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        int max = INT_MIN;
+        int size = nums.size();
+        if(size==1) return nums[0];
+        for(int i=0;i<size;i++)
+        {
+            max = nums[i]>max?nums[i]:max;
+            int mul = nums[i];
+            for(int j=i+1;j<size;j++)
+            {
+                max = mul*nums[j]>max?mul*nums[j]:max;
+                mul *= nums[j];
+            }
+        }
+        return max;
+    }
+};

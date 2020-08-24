@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        int size = nums.size(),i,maxmum=1;
+        int res=nums[0];
+        for(i=0;i<size;i++)     //正向遍历
+        {
+            maxmum *= nums[i];
+            res = max(maxmum,res);
+            if(nums[i]==0)      //遇到0重新计算
+                maxmum = 1;
+        }
+        maxmum = 1;
+        for(i=size-1;i>=0;i--)  //逆向遍历
+        {
+            maxmum *= nums[i];
+            res = max(maxmum,res);
+            if(nums[i]==0)      //遇到0重新计算
+                maxmum = 1;
+        }
+        return res;
+    }
+};
