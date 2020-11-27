@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int maximumGap(vector<int>& nums) {
+        vector<int> temp(nums.size());
+        int n = nums.size();
+        if( n<2 )
+            return 0;
+        int maxVal = *max_element(nums.begin(), nums.end());
+        int bitSize = 0;
+        int radix = 1;
+        int index = 0;
+        int result = 0;
+        for(int t=maxVal;t!=0;bitSize++)
+            t /= 10;
+        for(int i=0;i<bitSize;i++){
+            vector<int> bucket(10, 0);
+            int j=0;
+            for(j=0;j<n;j++){
+                bucket[(nums[j] / radix) % 10]++;
+            }
+            for(j=1; j<10;j++){
+                bucket[j] += bucket[j-1];
+            }
+            for(j=9; j>0;j--){
+                bucket[j] = bucket[j-1];
+            }
+            bucket[0] = 0;
+            for(j=0;j<n;j++){
+                temp[bucket[(nums[j] / radix) % 10]++] = nums[j];
+            }
+            for(j=0;j<n;j++){
+                nums[j] = temp[j];
+            }
+            radix *= 10;
+        }
+        for(int i=1;i<n;i++){
+            result = max(result,nums[i]-nums[i-1]);
+        }
+        return result;
+
+    }
+};
