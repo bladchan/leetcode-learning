@@ -1,0 +1,40 @@
+class Solution {
+public:
+    string reorganizeString(string S) {
+        int length = S.length();
+        if(length < 2){
+            return S;
+        }
+        int max_count = 0;
+        unordered_map<char, int> Count;
+        for(char c : S){
+            Count[c]++;
+            if(Count[c]>max_count){
+                max_count = Count[c];
+            }
+        }
+        if(max_count>(length+1)/2){
+            return "";
+        }
+        char temp[length+1];
+        int oddIndex=1,evenIndex=0;
+        for(int i=0;i<26;i++){
+            char c = 'a' + i;
+            if(Count.count(c) == 0){
+                continue;
+            }
+            while(oddIndex<length&&Count[c]!=0&&Count[c]<=length/2){
+                temp[oddIndex]=c;
+                Count[c]--;
+                oddIndex+=2;
+            }
+            while(evenIndex<length&&Count[c]!=0){
+                temp[evenIndex]=c;
+                Count[c]--;
+                evenIndex+=2;
+            }
+        }
+        temp[length] = '\0';
+        return string(temp);
+    }
+};
