@@ -1,0 +1,61 @@
+class Solution {
+private:
+    int findFirstPosition(vector<int> &nums, int target){
+        int left=0;
+        int right=nums.size()-1;
+        while(left<right){
+            int mid = (left+right)>>1;
+            if(target < nums[mid]){
+                // next: [left,mid-1]
+                right = mid - 1;
+            }else if(target > nums[mid]){
+                // next:[mid+1,right]
+                left = mid + 1;
+            }else{
+                // target == nums[mid]
+                // next:[left,mid]
+                right = mid;
+            }
+        }
+        if (nums[left]!=target){
+            return -1;
+        }
+        return left;
+    }
+    int findLastPosition(vector<int> &nums, int target){
+        int left=0;
+        int right=nums.size()-1;
+        while(left<right){
+            // cout << left << " " << right << endl;
+            int mid = (left+right+1)>>1;  // 需向上取整，否则会出现死循环
+            if(target < nums[mid]){
+                // next: [left,mid-1]
+                right = mid - 1;
+            }else if(target > nums[mid]){
+                // next:[mid+1,right]
+                left = mid + 1;
+            }else{
+                // target == nums[mid]
+                // next:[mid,right]
+                left = mid;
+            }
+        }
+        if (nums[left]!=target){
+            return -1;
+        }
+        return left;
+    }
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        int length = nums.size();
+        if(length == 0){
+            return vector<int>{-1,-1};
+        }
+        int firstPosition = findFirstPosition(nums,target);
+        if(firstPosition == -1){
+            return vector<int>{-1,-1};
+        }
+        int lastPosition = findLastPosition(nums,target);
+        return vector<int>{firstPosition, lastPosition};
+    }
+};
