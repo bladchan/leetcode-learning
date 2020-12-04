@@ -1,0 +1,34 @@
+class Solution {
+private:
+    vector<int> maxKSequence(vector<int> n, int k){
+        int n_size = n.size();
+        vector<int> res;  // 模拟单调栈
+        int drop = n_size - k;
+        for(int i=0; i<n_size; i++){
+            while(!res.empty() && res.back() < n[i] && drop>0 ){
+                drop--;
+                res.pop_back();
+            }
+            res.push_back(n[i]);
+        }
+        res.resize(k);
+        return res;
+    }
+public:
+    vector<int> maxNumber(vector<int>& nums1, vector<int>& nums2, int k) {
+        vector<int> result(k,0);
+        int n1 = nums1.size(), n2 = nums2.size();
+        for(int s = max(0, k-n2); s <= min(k, n1); s++){
+            vector<int> temp1 = maxKSequence(nums1, s);  // 找nums1长度为s的最大序列
+            vector<int> temp2 = maxKSequence(nums2, k - s); // 找nums2长度为k-s的最大序列
+            // 比较字典序并合并
+            vector<int> temp;
+            auto iter1 = temp1.begin(), iter2 = temp2.begin();
+            while(iter1!=temp1.end() || iter2!=temp2.end()){
+                temp.push_back(lexicographical_compare(iter1, temp1.end(), iter2, temp2.end()) ? *iter2++ : *iter1++);
+            }
+            result = lexicographical_compare(result.begin(), result.end(), temp.begin(), temp.end()) ? temp : result;
+        }
+        return result;
+    }
+};
