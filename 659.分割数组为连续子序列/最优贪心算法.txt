@@ -1,0 +1,32 @@
+class Solution {
+// better greedy algorithm
+public:
+    bool isPossible(vector<int>& nums) {
+        int n=nums.size();
+        int n1=0,n2=0,n3=0;
+        int i;
+        while(i<n){
+            int prev = nums[i];
+            int start = i;
+            while(i<n && nums[i] == prev) i++;
+            int cnt = i - start;  // count of nums[start]
+            if(start > 0 && prev!= nums[start-1]+1){
+                if(n1+n2>0) return false;
+                else{
+                    n1 = cnt;
+                    n2 = n3 = 0;
+                }
+            }else{
+                if(n1+n2>cnt) return false; // cnt cannot supply for both n1 and n2
+                else{
+                    int remnant = cnt - n1 - n2;
+                    int t = min(n3, remnant);
+                    n3 = n2 + t;  // n3 consists of previous n2 and t (which new prev link with n3 successfully)
+                    n2 = n1;  // n2 consists of previous n1
+                    n1 = remnant - t;  // n1 consists of prev which cannot link to a new sequence
+                }
+            }
+        }
+        return (n1==0 && n2==0);
+    }
+};

@@ -1,0 +1,27 @@
+class Solution1 {
+public:
+    bool isPossible(vector<int>& nums) {
+        unordered_map<int, priority_queue<int, vector<int>, greater<int>>> hashmap;
+        int length = nums.size();
+        for(int item: nums){
+            if(hashmap.count(item) == 0){
+                hashmap[item] = priority_queue<int, vector<int>, greater<int>>();
+            }
+            if(hashmap.count(item-1)!=0){
+                int prev = hashmap[item-1].top();
+                hashmap[item-1].pop();
+                hashmap[item].push(prev+1);
+                if(hashmap[item-1].empty()){
+                    hashmap.erase(item-1);
+                }
+            }else{
+                hashmap[item].push(1);
+            }
+        }
+        for(int item: nums){
+            if(!hashmap[item].empty() && hashmap[item].top() < 3)
+                return false;
+        }
+        return true;
+    }
+};
